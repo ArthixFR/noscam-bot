@@ -21,10 +21,9 @@ The most advanced scam link filter bot for Discord, this bot is 100% open source
 
 ## 💾 Prerequisites
 
-- A **Linux** system. (Dedicated or VPS.)
-- **Google Chrome** on Linux.
-- **xvfb** package.
-- **NodeJS** & **NPM**.
-- A pre created **bot** with the **token**.
-- A **brain** and some patience.
-
+- A **Linux** system. (Dedicated or VPS.) [Our VPS choice - Contabo.](https://contabo.com/en/vps/)
+- **Google Chrome** on Linux. [Installing Google Chrome on Debian.](https://linuxize.com/post/how-to-install-google-chrome-web-browser-on-debian-10/)
+- **xvfb** package. `sudo apt-get install xvfb`(on Debian/Ubuntu based distribution.)
+- **NodeJS 16.x** & **NPM**. [Installing NodeJS on a Debian/Ubuntu based distribution.](https://github.com/nodesource/distributions/blob/master/README.md)
+- A pre created **bot** with the **token**. [Setting up a bot application. (NodeJS Guide)](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot)
+- A **brain** and some patience. [Download brain.](https://www.youtube.com/watch?v=dQw4w9WgXcQ)

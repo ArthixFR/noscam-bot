@@ -38,9 +38,17 @@ First of all, clone the GitHub project in your selected folder
     # Cloning the GitHub project
     git clone https://github.com/ArthixFR/noscam-bot.git
 
-you should then be able to find the cloned project
+You should then be able to find the cloned project
 
     # Going in the bot directory
     cd noscam-bot
+    
+    # Displaying what's in the folder
+    ls
 
+If you want your bot running you'll need to change the config file with a ftp or the tool called nano. We'll use a ftp here.
+Copy the file named `config.sample.js` to `config.js`
+
+    # Copying a file and change the name
+    cp config.sample.js config.js
 

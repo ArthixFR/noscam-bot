@@ -1,0 +1,26 @@
+{
+  "name": "noscam-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/builders": "^0.13.0",
+    "@discordjs/rest": "^0.4.1",
+    "better-logging": "^4.7.0",
+    "chalk": "^4.1.1",
+    "countries-list": "^2.6.1",
+    "dateformat": "^3.0.3",
+    "discord-api-types": "^0.32.1",
+    "discord.js": "^13.7.0",
+    "humanize-duration": "^3.27.1",
+    "lodash": "^4.17.21",
+    "puppeteer-extra": "^3.2.3",
+    "puppeteer-extra-plugin-stealth": "^2.9.0",
+    "stop-discord-phishing": "^0.2.0"
+  }
+}

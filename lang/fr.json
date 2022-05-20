@@ -1,0 +1,23 @@
+{
+    "GLOBAL": {
+        "ERROR_TITLE": "**Erreur !**",
+        "LOADING": "Chargement...",
+        "GENERATED_IN": "Généré en $[time]",
+        "API_ERRORS": {
+            "MISSING_PERMISSIONS": "Je n'ai pas la permission pour faire ceci !"
+        },
+        "ERROR": {
+            "USER_NO_PERMISSION": "Vous n'avez pas la permission pour faire ceci !",
+            "COOLDOWN": "Vous devez attendre $[remaining] avant de pouvoir faire cette commande de nouveau !",
+            "UNKNOWN": "Une erreur inconnue est survenue !"
+        }
+    },
+    "COMMAND": {
+        "SCAMLOGS": {
+            "CHANNEL_SETUP_OK": "Scam log channel set to <#$[channel_id]>",
+            "ERROR": {
+                "NO_CHANNEL": "Channel not found!"
+            }
+        }
+    }
+}

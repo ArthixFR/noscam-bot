@@ -1,4 +1,5 @@
 # Logs
+logs/
 logs
 *.log
 npm-debug.log*
@@ -102,3 +103,14 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Intellij IDEA files
+.idea/
+
+# Bot config
+/config.js
+
+# Discord servers config folder
+data/
+
+scamChromeUserData/

@@ -8,6 +8,7 @@ The most advanced scam link filter bot for Discord, this bot is 100% open source
 - Sending an embed with logs to the chosen channel.
 - Buttons under the embed to ban the user. (Dyno button not available if Dyno is not on the server.)
 - Whitelist button if the URL is safe but got banned.
+- Role and channel whitelist.
 - Using multiple databases and APIs of known scam links such as:
 	- [discord-phishing-links](https://github.com/nikolaischunk/discord-phishing-links)
 	- [SinkingYachts Phishing Domain API](https://phish.sinking.yachts/docs)
@@ -26,4 +27,20 @@ The most advanced scam link filter bot for Discord, this bot is 100% open source
 - **xvfb** package. `sudo apt-get install xvfb`(on Debian/Ubuntu based distribution.)
 - **NodeJS 16.x** & **NPM**. [Installing NodeJS on a Debian/Ubuntu based distribution.](https://github.com/nodesource/distributions/blob/master/README.md)
 - A pre created **bot** with the **token**. [Setting up a bot application. (NodeJS Guide)](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot)
+- **Git**. [Git install guide on Linux.](https://www.atlassian.com/git/tutorials/install-git#linux)
+- **Screen** or **pm2**. (For run in background.)
 - A **brain** and some patience. [Download brain.](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+
+## 🔧 Installation
+
+First of all, clone the GitHub project in your selected folder
+
+    # Cloning the GitHub project
+    git clone https://github.com/ArthixFR/noscam-bot.git
+
+you should then be able to find the cloned project
+
+    # Going in the bot directory
+    cd noscam-bot
+
+

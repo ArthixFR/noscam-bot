@@ -2,7 +2,7 @@
 
 The most advanced scam link filter bot for Discord, this bot is 100% open source under MIT Licence.
 
-## 📃 Features
+## ✨ Features
 
 - Blocking scam links.
 - Sending an embed with logs to the chosen channel.
@@ -49,6 +49,23 @@ You should then be able to find the cloned project
 If you want your bot running you'll need to change the config file with a ftp or the tool called nano. We'll use a ftp here.
 Copy the file named `config.sample.js` to `config.js`
 
-    # Copying a file and change the name
+    # Copying a file and changing the name
     cp config.sample.js config.js
 
+Then, open the file `config.js` with your ftp client by copying it on your PC or opening it remotely.
+
+Search for the line `token: 'INSERT BOT TOKEN HERE'` and copy the bot token that you created on the Discord developper portal.
+
+⚠️ ***Be careful, never provide you bot token to anyone who you don't trust!*** ⚠️
+
+GG! The bot is ready to run on your server! Just type `node index.js` in your Linux terminal to run the bot. But if you leave the terminal page your bot will shutdown so we need to setup a background run for the bot.
+
+## ⚙️ Post installation
+
+### Background running
+
+Like said earlier, there's two methods for running the bot in background, Screen and pm2. We'll see in this part how to use Screen and pm2 with the bot.
+
+#### Screen
+
+The first option is screen, this tool is letting you running your script or other programm in the background with virtual screens, it's literally like running the with `node index.js` but this time is you leave the window, the bot will continue to run.

@@ -66,6 +66,52 @@ GG! The bot is ready to run on your server! Just type `node index.js` in your Li
 
 Like said earlier, there's two methods for running the bot in background, Screen and pm2. We'll see in this part how to use Screen and pm2 with the bot.
 
-#### Screen
+#### Screen method
 
 The first option is screen, this tool is letting you running your script or other programm in the background with virtual screens, it's literally like running the with `node index.js` but this time is you leave the window, the bot will continue to run.
+
+If it's not already the case, install Screen on your machine
+
+    # installing screen
+    sudo apt-get install screen
+
+Once done, check if it's properly installed
+
+    # Checking Screen version
+    screen -v
+
+It should return something like that
+
+    Screen version 4.08.00 (GNU) 05-Feb-20
+
+Now, go to the bot folder and create a file called `start.sh` then, open it with your code/text editor and add the following code
+
+    screen -dmS noscam-bot nodemon -L index.js  
+    echo "Bot started !"
+
+Save and go back in your terminal and type
+
+    # Making your file executable
+    chmod +x start.sh
+
+This will made your file executable.
+Now, we can start the bot with Screen!
+
+      # Starting the bot with Screen
+      ./start.sh
+
+The terminal should return `Bot started!`
+GG! Your bot is now running in the background! To access the virtual screen, you can type
+
+    # Accessing the virtual screen
+    screen -x noscam-bot
+
+To leave the screen you can do the following command `CTRL A` and then `d`, to kill the screen do `CTRL A` and then `k` or just doing a `CTRL C` on the screen.
+
+[Here's the full Screen documentation.](https://www.gnu.org/software/screen/manual/screen.html)
+
+#### pm2 method
+
+
+
+

@@ -475,6 +475,14 @@ module.exports = {
         }
     },
 
+    /**
+     * @param {*} data
+     * @return {string}
+     */
+    getMD5: function(data) {
+        return crypto.createHash('md5').update(data).digest('hex');
+    },
+
     COLORS: {
         default: config.isDevEnv ? '#7F0700' : '#002D63',
         error: '#fc0303',

@@ -1,9 +1,6 @@
-const {Collection, DMChannel, Client, Message, MessageEmbed, MessageActionRow, MessageButton} = require('discord.js');
+const {Client, Message, MessageEmbed, MessageActionRow, MessageButton} = require('discord.js');
 const config = require('../config.js');
-const language = require('../utils/lang.js');
 const utils = require('../utils/utils.js');
-const humanizeDuration = require("humanize-duration");
-const logger = require('../utils/logger.js');
 const stopPhishing = require('stop-discord-phishing');
 const crypto = require('crypto');
 
@@ -14,9 +11,6 @@ const PuppeteerStealth = require("puppeteer-extra-plugin-stealth");
 const {getGuildConfig} = require("../config/guildConfig.js");
 const {getPhishingData} = require("../config/phishingConfig.js");
 Puppeteer.use(PuppeteerStealth());
-
-const cooldowns = new Collection();
-const cooldownsMessage = new Collection();
 
 /**
  * @param {Client} client
@@ -92,12 +86,12 @@ module.exports = async (client, message) => {
                 console.error('[✋] Scam logs channel is not setup, cannot send message !');
             } else {
                 client.channels.fetch(scamLogChannelId).then(channel => {
-                    // Si l'utilisateur existe déjà dans le cache, pas la peine d'envoyer un nouveau message
+                    // If the user already exists in the cache, no need to send a new message
                     if (client.scamCache.has(message.author.id)) {
                         channel.messages.fetch(client.scamCache.get(message.author.id).sentMessageId).then(messageSent => {
                             /** @type {MessageEmbed} */
                             let embed = messageSent.embeds[0];
-                            // Si la personne a envoyé plusieurs messages détectés comme scam, on modifie la description
+                            // If the person has sent several messages detected as scam, we edit the description
                             let description = embed.description;
                             if (!description.includes('Multiple')) {
                                 description = description.replace(':warning: Suspicious message', ':warning: Multiple suspicious messages').replace(':exclamation: Phishing message', ':exclamation: Multiple phishing messages')
@@ -107,12 +101,12 @@ module.exports = async (client, message) => {
                             }
                             embed.setDescription(description);
 
-                            // Si la personne n'a pas envoyé le même message, on ajoute un field dans l'embed
+                            // If the person has not sent the same message, we add a field in the embed
                             if (crypto.createHash('md5').update(message.content).digest("hex") !== client.scamCache.get(message.author.id).md5) {
                                 embed.addField('Another flagged message', deletedMessage.content.length > 1019 ? deletedMessage.content.slice(0, 1019) + '...' : deletedMessage.content);
                             }
 
-                            // Et enfin on envoie la modification de l'embed
+                            // And finally we send the modification of the embed
                             let buttons = messageSent.components[0].components;
                             const row = new MessageActionRow().addComponents(buttons);
 
@@ -122,7 +116,7 @@ module.exports = async (client, message) => {
                             console.error(reason);
                         });
                     } else {
-                        // Si ce n'est pas le même utilisateur, on envoie un message et on l'ajouter dans scamCache
+                        // If it is not the same user, we send a message and add it in scamCache
                         let embed = new MessageEmbed()
                             .setAuthor({name: deletedMessage.author.tag, iconURL: deletedMessage.author.avatarURL()})
                             .setFooter({text: `User ID: ${deletedMessage.author.id} | Reason(s) : ${badLinkReason}`})
@@ -168,15 +162,13 @@ module.exports = async (client, message) => {
             console.error('[✋] Cannot delete phishing message');
             console.error(reason);
         });
-
-        return;
     }
 
     async function checkWebsite(url, domainUrl) {
         console.log(url);
 
         return new Promise(async (resolve, reject) => {
-            // Si puppeteer est fermé pour une raison que j'ignore, le relancer.
+            // If puppeteer is closed for some reason, restart it.
             if (client.puppeteer === undefined) {
                 client.puppeteer = await Puppeteer.default.launch({ headless: false, args: config.puppeteer.args, userDataDir: config.puppeteer.userDataDir, executablePath: config.puppeteer.executablePath});
             }

@@ -1,9 +1,6 @@
-const config = require("../config.js");
 const {getGuildConfig} = require('../config/guildConfig.js');
 const scamConfig = require('../config/scamConfig.js');
-const {GuildMember, Client} = require("discord.js");
-
-let hasBeenWarned = false;
+const {Client} = require("discord.js");
 
 /**
  * @param {Client} client
@@ -25,12 +22,4 @@ module.exports = (client, guild) => {
 
     console.info(`[✋] Initializing scam data.`);
     scamConfig.getScamData().createGuildScamData(guild.id);
-
-    if (config.isDevEnv) {
-        if (!hasBeenWarned) {
-            console.warn(`You're in dev mode, guildMemberAdd event is disabled!`);
-            hasBeenWarned = true;
-        }
-        return;
-    }
 };

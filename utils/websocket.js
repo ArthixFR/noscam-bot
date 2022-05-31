@@ -32,10 +32,10 @@ module.exports = {
                     let message = JSON.parse(data.toString());
                     let phishingData = getPhishingData();
                     if (message.type === 'add') {
-                        console.info(`[📮] New domains to add received! ${message.domains.join(',')}`);
+                        console.info(`[📮] New domains to add received! (${message.domains.join(',')})`);
                         phishingData.addToDatabase(message.domains);
                     } else if (message.type === 'delete') {
-                        console.info(`[📮] New domains to remove received! ${message.domains.join(',')}`);
+                        console.info(`[📮] New domains to remove received! (${message.domains.join(',')})`);
                         phishingData.removeToDatabase(message.domains);
                     }
                 } catch (e) {

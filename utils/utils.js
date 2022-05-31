@@ -380,34 +380,6 @@ module.exports = {
     },
 
     /**
-     * Ajoute des espaces aux gros chiffres (ex: 15548721 => 15 548 721)
-     * @param {number} x
-     * @return {string}
-     */
-    numberWithSpaces: function(x) {
-        if (x === null) return '???';
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-    },
-
-    /**
-     * @param {Client} client
-     * @param {string} commandName
-     * @return {*}
-     */
-    getCommandByAlias: function(client, commandName) {
-        let commandFound;
-        client.commands.forEach(command => {
-            if (command.aliases instanceof Array) {
-                command.aliases.forEach(alias => {
-                    if (alias === commandName) commandFound = command;
-                });
-            }
-        });
-
-        return commandFound;
-    },
-
-    /**
      * @param {*} command
      * @param {GuildMember} member
      * @param {boolean?} isLogged
@@ -501,14 +473,6 @@ module.exports = {
                     console.line(reason);
                 });
         }
-    },
-
-    /**
-     * @param {*} data
-     * @return {string}
-     */
-    getMD5: function(data) {
-        return crypto.createHash('md5').update(data).digest('hex');
     },
 
     COLORS: {

@@ -20,24 +20,21 @@ module.exports = async (client, interaction) => {
 
     if (interaction.user.bot) return;
 
-    const commandName = interaction.commandName;
-
-    const commandAlias = utils.getCommandByAlias(client, commandName);
-    const command = commandAlias === undefined ? client.commands.get(commandName) : commandAlias;
+    const command = client.commands.get(interaction.commandName);
 
     if (!command) return;
 
     const user = interaction.user;
 
-    // Si le paramètre 'guildOnly' est sur true et que le message envoyé ne se situe pas dans un canal textuel d'une guild, la commande n'est pas exécutée.
+    // If the 'isDMAllowed' parameter is true and the message sent is not in a guild, the command is not executed.
     if (!command.isDMAllowed && interaction.guildId === null) {return}
 
     const guildMember = interaction.member;
 
-    // Récupération de la langue de la guilde
+    // Getting guild language
     const lang = interaction.guildId === null ? language.getLang('en') : language.getGuildLang(guildMember.guild.id);
 
-    // Si le paramètre 'botOwnersOnly' de la commande est sur true, vérifie si l'utilisateur est dans la liste des 'botOwners' dans le fichier config.
+    // If the 'botOwnersOnly' parameter of the command is set to true, check if the user is in the list of 'botOwners' in the config file. If not the command is not executed and logged.
     if (command.botOwnersOnly) {
         if (config.botOwners.indexOf(user.id) === -1) {
             console.debug(user.username + ' is not a bot owner !');
@@ -46,12 +43,12 @@ module.exports = async (client, interaction) => {
         }
     }
 
-    // Vérifie si l'utilisateur a bien la/les permission(s) tel que défini dans le paramètre 'permissions'.
+    // Checks if the user has the permission(s) as defined in the 'permissions' parameter.
     if (!utils.hasPermission(command, guildMember, true)) {
         return interaction.reply({ content: lang.getTranslate({}, 'GLOBAL', 'ERROR', 'USER_NO_PERMISSION'), ephemeral: true });
     }
 
-    // Vérifie si l'utilisateur n'a pas de temps d'attente avec la commande en question
+    // Checks if the user has no waiting time with the command
     let userId = user.id;
     if (command.cooldown !== undefined && command.cooldown !== 0 && config.botOwners.indexOf(user.id) === -1) {
         console.debug('Actual time : ' + Date.now());
@@ -63,7 +60,7 @@ module.exports = async (client, interaction) => {
             let commandCooldown = commandCooldowns[command.name];
             if (commandCooldown !== undefined) {
                 if ((commandCooldown + (command.cooldown * 1000)) >= Date.now()) {
-                    // Ne peut pas executer la commande
+                    // Cannot execute command
                     if (!cooldownsMessage.has(userId)) {
                         cooldownsMessage.set(userId, {[command.name]: Date.now()});
                         const remaining = humanizeDuration((commandCooldown + (command.cooldown * 1000)) - Date.now(), { language: lang.getLanguage(), round: true });
@@ -88,7 +85,7 @@ module.exports = async (client, interaction) => {
                         }
                     }
                 } else {
-                    // Peut executer la commande, donc on enregistre quand
+                    // Can execute command, so we save the time
                     commandCooldowns[command.name] = Date.now();
                     cooldowns.set(userId, commandCooldowns);
                 }
@@ -114,7 +111,6 @@ function executeCommand(command, interaction, client, lang, user) {
         command.executeSlash(interaction, client, client.config.prefix, lang);
     } catch (error) {
         utils.sendErrorEmbedInteraction(client, lang.getTranslate({}, "GLOBAL", "ERROR", "UNKNOWN"), interaction, true);
-        // TODO: Rendre ça compatible avec Interaction
         utils.sendErrorConsole(command.name, interaction, error);
     }
 }

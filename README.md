@@ -1,6 +1,25 @@
 # The most advanced scam link filter bot for Discord
 
 The most advanced scam link filter bot for Discord, this bot is 100% open source under MIT Licence.
+<p align="center">
+<a href="https://en.wikipedia.org/wiki/MIT_License"><img src="https://img.shields.io/github/license/ArthixFR/noscam-bot"/></a>
+<a href="https://github.com/ArthixFR/noscam-bot/commits/master"><img src="https://img.shields.io/github/last-commit/ArthixFR/noscam-bot"/></a>
+<a href="https://github.com/ArthixFR/noscam-bot/issues?q=is%3Aopen"><img src="https://img.shields.io/github/issues/ArthixFR/noscam-bot"/></a>
+</p>
+<p align="center">
+<img src="https://img.shields.io/badge/platform-Linux-lightgrey?logo=linux"/></a>
+<img src="https://img.shields.io/badge/language-javascript-lightgrey?logo=javascript"/></a>
+<a href="https://nodejs.org/en/download/"><img src="https://img.shields.io/badge/nodejs-16.15-yellow"/></a>
+</p>
+<p align="center">
+<a href="https://www.npmjs.com/package/discord.js"><img src="https://img.shields.io/github/package-json/dependency-version/ArthixFR/noscam-bot/discord.js"/></a>
+<a href="https://www.npmjs.com/package/puppeteer-extra"><img src="https://img.shields.io/github/package-json/dependency-version/ArthixFR/noscam-bot/puppeteer-extra"/></a>
+<a href="https://www.npmjs.com/package/stop-discord-phishing"><img src="https://img.shields.io/github/package-json/dependency-version/ArthixFR/noscam-bot/stop-discord-phishing"/></a>
+</p>
+
+<p align="center" markdown="1">
+<a href='https://ko-fi.com/L4L6D0ER6' target='_blank'><img src='https://cdn.discordapp.com/attachments/667743557146378250/981320323079221308/ko-fi.png' border='0' alt='Buy Us a Coffee at ko-fi.com' /></a>
+</p>
 
 ## ✨ Features
 
@@ -12,12 +31,11 @@ The most advanced scam link filter bot for Discord, this bot is 100% open source
 - Using multiple databases and APIs of known scam links such as:
 	- [discord-phishing-links](https://github.com/nikolaischunk/discord-phishing-links)
 	- [SinkingYachts Phishing Domain API](https://phish.sinking.yachts/docs)
-	- [Phishing.Database](https://github.com/mitchellkrogza/Phishing.Database)
-- If the sent link is not known by any database, the bot will check the website in a browser:
+- If the link sent is not known by any database, the bot will check the website in a browser:
 	- Reused Discord assets checking. (If the Discord main page got dumped or partially dumped.)
 	- Suspicious website title checking. (Nitro, Free nitro words...)
 	- Reused webapp from Discord. (React, if the Discord main page got dumped.)
-	- Cloudflare bypass. (It's soemtimes not working.)
+	- Cloudflare bypass. (It's sometimes not working.)
 	- Not all links are scanned if not known by any database, only suspicious ones.
 
 ## 💾 Prerequisites
@@ -56,7 +74,7 @@ Then, open the file `config.js` with your ftp client by copying it on your PC or
 
 Search for the line `token: 'INSERT BOT TOKEN HERE'` and copy the bot token that you created on the Discord developper portal.
 
-⚠️ ***Be careful, never provide you bot token to anyone who you don't trust!*** ⚠️
+⚠️ ***Be careful, never provide your bot token to anyone who you don't trust!*** ⚠️
 
 Now, you'll need to install npm dependencies, without them the bot is not gonna be able to run.
 

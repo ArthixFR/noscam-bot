@@ -8,6 +8,8 @@ const {REST} = require('@discordjs/rest');
 const {Routes} = require('discord-api-types/v10');
 const {SlashCommandBuilder} = require('@discordjs/builders');
 const _ = require('lodash');
+const {getPhishingData} = require('../config/phishingConfig.js');
+const axios = require('axios').default;
 
 let beginTimestamp = 0;
 
@@ -461,6 +463,44 @@ module.exports = {
                 }
             }
         });
+    },
+
+    updatePhishingDatabase() {
+        console.info('[✋] Updating phishing database.');
+        if (getPhishingData().getLastUpdate() < Date.now() - (518400 * 1000)) {
+            console.info('[✋] The phishing database has not been updated for more than 6 days, getting full phishing list.');
+            axios.get('https://phish.sinking.yachts/v2/all', {headers: {'X-Identity': 'NoScam Discord bot', 'Accept': 'application/json'}})
+                .then(response => {
+                    console.info('[✋] The phishing database has been updated!');
+                    getPhishingData().setDatabase(response.data);
+                })
+                .catch(reason => {
+                    console.error('[✋] An error occured while trying to update phishing database!');
+                    console.line(reason);
+                });
+        } else {
+            console.info('[✋] The phishing database was updated less than 6 days ago, getting recent changes.');
+            let datetime = ((Date.now() - getPhishingData().getLastUpdate()) / 1000).toFixed(0);
+            axios.get(`https://phish.sinking.yachts/v2/recent/${datetime}`, {headers: {'X-Identity': 'NoScam Discord bot', 'Accept': 'application/json'}})
+                .then(response => {
+                    let domainsToAdd = [];
+                    let domainsToRemove = [];
+
+                    response.data.forEach(domainsModification => {
+                        if (domainsModification.type === 'add') domainsToAdd.push(domainsModification.domains);
+                        if (domainsModification.type === 'delete') domainsToRemove.push(domainsModification.domains);
+                    });
+
+                    getPhishingData().addToDatabase(domainsToAdd);
+                    getPhishingData().removeToDatabase(domainsToRemove);
+
+                    console.info(`[✋] The phishing database has been updated with ${domainsToAdd.length} addition${domainsToAdd.length > 1 ? 's' : ''} and ${domainsToRemove.length} deletion${domainsToRemove.length > 1 ? 's' : ''}`);
+                })
+                .catch(reason => {
+                    console.error('[✋] An error occured while trying to update phishing database!');
+                    console.line(reason);
+                });
+        }
     },
 
     /**

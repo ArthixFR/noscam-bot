@@ -12,6 +12,7 @@ const scamConfig = require('../config/scamConfig.js');
 const Puppeteer = require("puppeteer-extra");
 const PuppeteerStealth = require("puppeteer-extra-plugin-stealth");
 const {getGuildConfig} = require("../config/guildConfig.js");
+const {getPhishingData} = require("../config/phishingConfig.js");
 Puppeteer.use(PuppeteerStealth());
 
 const cooldowns = new Collection();
@@ -28,13 +29,24 @@ module.exports = async (client, message) => {
     // REGEX DISCORD OFFICIAL DOMAINS : (?!(discord\.com|discord\.gg|discord\.media|discordapp\.com|discordapp\.net|discordstatus\.com|discord\.gift))
 
     // (?:(?:https?|ftp|mailto):\/\/)(?:www.{0,3}\.)?.*((?=((di|dj|dl)(?=.*s)(?=.*c)(?=.*o)(?=.*r).*d.*\..*))|(?=(free|nitro|hype|gift|boost)).*\..*)(?!(discord\.com|discord\.gg|discord\.media|discordapp\.com|discordapp\.net|discordstatus\.com|discord\.gift))
-
-    // Vérifie si le message contient un lien de phishing
-    let badLinkReason = "Blacklisted link";
-    let isPhishing = await stopPhishing.checkMessage(message.content);
     let isSuspicious = false;
     let regexSuspicious = /(?:(?:https?|ftp|mailto):\/\/)(?:www.{0,3}\.)?.*((?=((di|dj|dl)(?=.*s)(?=.*c)(?=.*o)(?=.*r).*d.*\..*))|(?=(free|nitro|hype|gift|boost)).*\..*)(?!(discord\.com|discord\.gg|discord\.media|discordapp\.com|discordapp\.net|discordstatus\.com|discord\.gift))/gi;
     let linkMatch;
+
+    // Checking with stop-discord-phishing database
+    let badLinkReason = "stop-discord-phishing blacklist";
+    let isPhishing = await stopPhishing.checkMessage(message.content);
+
+    // Checking with SinkingYachts Phishing database
+    let links = message.content.match(linkRegex);
+    if (links !== null) {
+        links.forEach(link => {
+            if (getPhishingData().isInDatabase(link)) {
+                isPhishing = true;
+                badLinkReason = "SinkingYachts phishing blacklist";
+            }
+        })
+    }
 
     let guildId = message.guild.id;
 

@@ -7,6 +7,8 @@ const Puppeteer = require("puppeteer-extra");
 
 const guildConfig = require('./config/guildConfig.js');
 const scamConfig = require('./config/scamConfig.js');
+const {initPhishingData} = require('./config/phishingConfig.js');
+const websocket = require('./utils/websocket.js');
 
 let config = undefined;
 const lang = require('./utils/lang.js');
@@ -75,6 +77,9 @@ guildConfig.initGuildConfig();
 // Init scam list
 scamConfig.initScamData();
 
+// Init phishing database
+initPhishingData();
+
 // Registering events
 console.info("=====================[START REGISTERING EVENTS]=====================");
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));
@@ -115,9 +120,20 @@ client.login(config.token).then(async () => {
     console.info("=====================[START REGISTERING SLASH COMMANDS]=====================")
     await utils.registerSlashCommands(client);
     console.info("=====================[END REGISTERING SLASH COMMANDS]=====================")
-    console.line(" ")
+    console.line(" ");
 
     // Opening a browser with puppeteer when bot is started
     console.info("[💻] Starting puppeteer");
     client.puppeteer = await Puppeteer.default.launch({headless: false, args: config.puppeteer.args, userDataDir: config.puppeteer.userDataDir, executablePath: config.puppeteer.executablePath});
+
+    // Opening a websocket connection to SinkingYachts Phishing API
+    websocket.initConnection().then(ws => {
+        if (ws.readyState === ws.OPEN) {
+            utils.updatePhishingDatabase();
+        }
+    }).catch(err => {
+        console.error('[📮] An error occured with message:');
+        console.error(err.message);
+    });
+
 });

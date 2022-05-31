@@ -58,6 +58,11 @@ Search for the line `token: 'INSERT BOT TOKEN HERE'` and copy the bot token that
 
 ⚠️ ***Be careful, never provide you bot token to anyone who you don't trust!*** ⚠️
 
+Now, you'll need to install npm dependencies, without them the bot is not gonna be able to run.
+
+	# Installing dependencies
+	npm i
+
 GG! The bot is ready to run on your server! Just type `node index.js` in your Linux terminal to run the bot. But if you leave the terminal page your bot will shutdown so we need to setup a background run for the bot.
 
 ## ⚙️ Post installation
@@ -66,11 +71,11 @@ GG! The bot is ready to run on your server! Just type `node index.js` in your Li
 
 Like said earlier, there's two methods for running the bot in background, Screen and pm2. We'll see in this part how to use Screen and pm2 with the bot.
 
-#### Screen method
+### Screen method
 
-The first option is screen, this tool is letting you running your script or other programm in the background with virtual screens, it's literally like running the with `node index.js` but this time is you leave the window, the bot will continue to run.
+The first option is screen, this tool is letting you running your script or other program in the background with virtual screens, it's literally like running the with `node index.js` but this time, if you leave the window, the bot will continue to run.
 
-If it's not already the case, install Screen on your machine
+If it's not already the case, install Screen on your system
 
     # installing screen
     sudo apt-get install screen
@@ -84,21 +89,15 @@ It should return something like that
 
     Screen version 4.08.00 (GNU) 05-Feb-20
 
-Now, go to the bot folder and create a file called `start.sh` then, open it with your code/text editor and add the following code
-
-    screen -dmS noscam-bot nodemon -L index.js  
-    echo "Bot started !"
-
-Save and go back in your terminal and type
+Now type the following command to make your file executable
 
     # Making your file executable
     chmod +x start.sh
 
-This will made your file executable.
 Now, we can start the bot with Screen!
 
-      # Starting the bot with Screen
-      ./start.sh
+	# Starting the bot with Screen
+    ./start.sh
 
 The terminal should return `Bot started!`
 GG! Your bot is now running in the background! To access the virtual screen, you can type
@@ -110,8 +109,37 @@ To leave the screen you can do the following command `CTRL A` and then `d`, to k
 
 [Here's the full Screen documentation.](https://www.gnu.org/software/screen/manual/screen.html)
 
-#### pm2 method
+### pm2 method
 
+We'll see here the pm2 method. pm2 is a powerful tool where you can monitor your bot usage in realtime but also managing it. (Restart, crash...)
 
+First of all, you need to [create an account on pm2.](https://id.keymetrics.io/api/oauth/register)
+Then, you should land on the bucket creation page. Call your bucket `noscam-bot`.
 
+Follow the instructions on pm2 after the bucket creation.
 
+	# Installing pm2 with NPM
+	npm install pm2 -g
+	
+	# Linking pm2 to the bot
+	pm2 link xxxxxxxxxxxx xxxxxxxxxxxxx
+
+Now that you have linked you can initialize the bot config on pm2 with
+
+	# Starting the bot for the first time
+	pm2 start pm2.config.js
+
+Now that you've started the config for the first time, all interactions with pm2 and the bot will be
+
+	# Starting the bot
+	pm2 start noscam-bot
+	
+	# Stopping the bot
+	pm2 stop noscam-bot
+	
+	# Restarting the bot
+	pm2 restart noscam-bot
+
+GG Your bot is now running on pm2! You can access the virtual screen with `pm2 logs noscam-bot` you also can do `pm2 status` to see what's currently running.
+
+Everything is also manageable on the pm2 website, [you can read the full doc here.](https://pm2.io/docs/plus/overview/)

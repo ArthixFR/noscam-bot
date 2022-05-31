@@ -74,7 +74,7 @@ Then, open the file `config.js` with your ftp client by copying it on your PC or
 
 Search for the line `token: 'INSERT BOT TOKEN HERE'` and copy the bot token that you created on the Discord developper portal.
 
-⚠️ ***Be careful, never provide you bot token to anyone who you don't trust!*** ⚠️
+⚠️ ***Be careful, never provide your bot token to anyone who you don't trust!*** ⚠️
 
 Now, you'll need to install npm dependencies, without them the bot is not gonna be able to run.
 

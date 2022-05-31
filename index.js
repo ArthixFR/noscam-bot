@@ -8,9 +8,8 @@ const Puppeteer = require("puppeteer-extra");
 const guildConfig = require('./config/guildConfig.js');
 const scamConfig = require('./config/scamConfig.js');
 
-const config = require('./config.js');
+let config = undefined;
 const lang = require('./utils/lang.js');
-const utils = require('./utils/utils.js');
 const fs = require("fs");
 
 const client = new Client({intents: [
@@ -37,6 +36,17 @@ betterLogging(console, {
 console.fatal = (message) => {
     console.line(chalk.grey(`[${chalk.rgb(139, 0, 0)(dateformat(new Date(), "dd/mm/yyyy HH:MM:ss"))}] [${chalk.rgb(139, 0, 0)('FATAL')}] ${chalk.reset(message)}`));
 };
+
+// Checking if the config file exists
+if (fs.existsSync(path.join(__dirname, 'config.js'))) {
+    config = require('./config.js');
+} else {
+    console.fatal('File config.js not found! Copy config.sample.js and rename it to config.js.');
+    process.exit();
+}
+
+// utils.js needs to be required after checking if config.js exists
+const utils = require('./utils/utils.js');
 
 if (config.isDevEnv) console.logLevel = 4; // Enable debug mode
 

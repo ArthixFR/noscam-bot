@@ -11,8 +11,7 @@ module.exports = {
         args: [ // You can add more args if you need to.
             "--disable-setuid-sandbox",
             "--no-sandbox",
-            "--disable-gpu",
-            "--single-process"
+            "--disable-gpu"
         ],
         userDataDir: './scamChromeUserData', // User data for puppeteer browser, no need to change it
         executablePath: '/usr/bin/google-chrome' // Path to google-chrome

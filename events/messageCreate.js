@@ -50,7 +50,7 @@ module.exports = async (client, message) => {
                     isSuspicious = true;
                     badLinkReason = "Custom blacklisted link";
                 } else {
-                    let check = await checkWebsite(linkMatch[0], linkMatch[1]).then(linkStatus => {
+                    await checkWebsite(linkMatch[0], linkMatch[1]).then(linkStatus => {
                         isSuspicious = linkStatus.isSuspect;
                         if (isSuspicious) {
                             badLinkReason = linkStatus.reasons.join(', ');
@@ -166,7 +166,7 @@ module.exports = async (client, message) => {
         return new Promise(async (resolve, reject) => {
             // Si puppeteer est fermé pour une raison que j'ignore, le relancer.
             if (client.puppeteer === undefined) {
-                client.puppeteer = await Puppeteer.default.launch({ headless: true, args: config.puppeteer.args, userDataDir: config.puppeteer.userDataDir, executablePath: config.puppeteer.executablePath});
+                client.puppeteer = await Puppeteer.default.launch({ headless: false, args: config.puppeteer.args, userDataDir: config.puppeteer.userDataDir, executablePath: config.puppeteer.executablePath});
             }
 
             try {

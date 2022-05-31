@@ -119,5 +119,5 @@ client.login(config.token).then(async () => {
 
     // Opening a browser with puppeteer when bot is started
     console.info("[💻] Starting puppeteer");
-    client.puppeteer = await Puppeteer.default.launch({ headless: true, args: config.puppeteer.args, userDataDir: config.puppeteer.userDataDir, executablePath: config.puppeteer.executablePath});
+    client.puppeteer = await Puppeteer.default.launch({headless: false, args: config.puppeteer.args, userDataDir: config.puppeteer.userDataDir, executablePath: config.puppeteer.executablePath});
 });
